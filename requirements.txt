@@ -1,0 +1,7 @@
+facebook-business
+google-ads
+google-analytics-data
+pandas
+sqlalchemy
+python-dotenv
+requests 

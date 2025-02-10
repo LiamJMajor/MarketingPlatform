@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  marketing-collector:
+    build: .
+    container_name: marketing-collector
+    environment:
+      - TZ=YOUR_TIMEZONE  # e.g., America/New_York
+    volumes:
+      - /mnt/user/appdata/marketing-collector/data:/data
+      - /mnt/user/appdata/marketing-collector/logs:/app/logs
+    env_file:
+      - .env
+    restart: unless-stopped 
