@@ -1,14 +1,15 @@
-print("Hello World again")
-
 import os
 from datetime import datetime
 from sqlalchemy import create_engine
 from data_collectors.meta import MetaCollector
-#from data_collectors.google import GoogleAdsCollector
+from data_collectors.google import GoogleAdsCollector
 import logging
 
 # Setup logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 # Database connection
@@ -17,18 +18,13 @@ engine = create_engine(f'sqlite:///{DATABASE_PATH}')
 
 def main():
     try:
-        # Initialize collectors
-        meta_collector = MetaCollector()
-        #google_collector = GoogleAdsCollector()
+        # Initialize collectors with engine
+        meta_collector = MetaCollector(engine)
+        google_collector = GoogleAdsCollector(engine)
         
         # Collect data
-        meta_data = meta_collector.collect_data()
-        #google_data = google_collector.collect_data()
-        
-        # Save to database
-        current_date = datetime.now().strftime('%Y_%m_%d')
-        meta_data.to_sql(f'meta_data_{current_date}', engine, if_exists='replace')
-        #google_data.to_sql(f'google_data_{current_date}', engine, if_exists='replace')
+        meta_collector.collect_data()
+        google_collector.collect_data()
         
         logger.info("Data collection completed successfully")
         
@@ -37,4 +33,4 @@ def main():
         raise
 
 if __name__ == "__main__":
-    main() 
+    main()
