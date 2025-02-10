@@ -16,17 +16,20 @@ class MetaCollector:
     def collect_data(self):
         account = AdAccount(self.ad_account_id)
         
-        # Get insights data
+        # Get insights data broken down by day
         insights = account.get_insights(
             params={
                 'date_preset': 'last_30d',
                 'fields': [
                     'campaign_name',
                     'spend',
-                    'impressions',
+                    'impressions', 
                     'clicks',
-                    'reach'
-                ]
+                    'reach',
+                    'date_start',
+                    'date_stop'
+                ],
+                'time_increment': 1  # Break down by day
             }
         )
         
