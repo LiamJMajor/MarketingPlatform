@@ -5,6 +5,9 @@ from data_collectors.meta import MetaCollector
 from data_collectors.google import GoogleAdsCollector
 import logging
 
+print(f"Current time: {datetime.now()}")
+
+
 # Setup logging
 logging.basicConfig(
     level=logging.INFO,
