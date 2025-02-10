@@ -17,16 +17,16 @@ def main():
     try:
         # Initialize collectors
         meta_collector = MetaCollector()
-        google_collector = GoogleAdsCollector()
+        #google_collector = GoogleAdsCollector()
         
         # Collect data
         meta_data = meta_collector.collect_data()
-        google_data = google_collector.collect_data()
+        #google_data = google_collector.collect_data()
         
         # Save to database
         current_date = datetime.now().strftime('%Y_%m_%d')
         meta_data.to_sql(f'meta_data_{current_date}', engine, if_exists='replace')
-        google_data.to_sql(f'google_data_{current_date}', engine, if_exists='replace')
+        #google_data.to_sql(f'google_data_{current_date}', engine, if_exists='replace')
         
         logger.info("Data collection completed successfully")
         
