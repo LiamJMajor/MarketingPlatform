@@ -33,13 +33,7 @@ class MetaCollector:
 
         # Print first few rows of insights data for debugging
         print("Sample Meta Ads insights data:")
-        for insight in list(insights)[:3]:
-            print(f"Campaign: {insight['campaign_name']}")
-            print(f"Spend: ${insight['spend']}")
-            print(f"Impressions: {insight['impressions']}")
-            print(f"Clicks: {insight['clicks']}")
-            print(f"Reach: {insight['reach']}")
-            print("---")
+        print(pd.DataFrame(insights).head())
 
     
         return pd.DataFrame(insights) 
