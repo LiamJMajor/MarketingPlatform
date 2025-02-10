@@ -5,13 +5,19 @@ from data_collectors.meta import MetaCollector
 from data_collectors.google import GoogleAdsCollector
 import logging
 
-print(f"Current time: {datetime.now()}")
+# Log current datetime at startup
+logger = logging.getLogger(__name__)
+logger.info(f"Script started at: {datetime.now()}")
 
 
-# Setup logging
+# Setup logging with more detailed configuration
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),  # Logs to console
+        logging.FileHandler('marketing_collector.log')  # Also logs to file
+    ]
 )
 logger = logging.getLogger(__name__)
 
@@ -21,13 +27,23 @@ engine = create_engine(f'sqlite:///{DATABASE_PATH}')
 
 def main():
     try:
-        # Initialize collectors with engine
-        meta_collector = MetaCollector(engine)
-        google_collector = GoogleAdsCollector(engine)
+        logger.info("Starting data collection process")
+        
+        # Initialize collectors
+        logger.info("Initializing Meta collector")
+        meta_collector = MetaCollector()
+        
+        logger.info("Initializing Google collector")
+        google_collector = GoogleAdsCollector()
         
         # Collect data
-        meta_collector.collect_data()
-        google_collector.collect_data()
+        logger.info("Starting Meta data collection")
+        meta_data = meta_collector.collect_data()
+        logger.info(f"Meta data collection complete. Shape: {meta_data.shape if meta_data is not None else 'No data'}")
+        
+        logger.info("Starting Google Ads data collection")
+        google_data = google_collector.collect_data()
+        logger.info(f"Google data collection complete. Shape: {google_data.shape if google_data is not None else 'No data'}")
         
         logger.info("Data collection completed successfully")
         
