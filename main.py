@@ -1,8 +1,10 @@
+print("Hello World")
+
 import os
 from datetime import datetime
 from sqlalchemy import create_engine
 from data_collectors.meta import MetaCollector
-from data_collectors.google import GoogleAdsCollector
+#from data_collectors.google import GoogleAdsCollector
 import logging
 
 # Setup logging
